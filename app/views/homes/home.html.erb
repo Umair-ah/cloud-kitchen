@@ -1,0 +1,8 @@
+
+<% if session[:data] %>
+  <p> Data: <%= session[:data] %>
+  ID: <%= session[:user_id] %></p>
+
+  <%= button_to "Log Out", auth_logout_path %> 
+<% end %>
+<!-- #o4m6DSejNENBTXqlqvw5zTpXHtW2 -->
