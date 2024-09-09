@@ -10,5 +10,7 @@ Rails.application.routes.draw do
 
   root "homes#home"
 
+  post "auth/google_login", to: "auths#google_login"
+
   
 end

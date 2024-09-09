@@ -73,3 +73,5 @@ group :test do
   gem "selenium-webdriver"
 
 end
+gem 'firebase-admin-sdk'
+gem 'rack-cors'
