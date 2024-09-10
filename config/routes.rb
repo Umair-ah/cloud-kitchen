@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :categories, param: :title do 
+    resources :products, param: :title, except: %i[index]
+  end
   get "auth/signup", to: "auths#signup_page"
   get "auth/login", to: "auths#login_page"
 

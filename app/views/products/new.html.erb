@@ -1,0 +1,56 @@
+<%= form_with(model: @product, url: category_products_path(@category.title), local: true, multipart: true, html: { class: "space-y-6" }) do |form| %>
+  <% if @product.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Errors:</strong>
+      <ul class="list-disc pl-5 mt-2">
+        <% @product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex flex-col space-y-2">
+    <%= form.label :title, class: "text-gray-700 font-medium" %>
+    <%= form.text_field :title, class: "form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <%= form.label :description, class: "text-gray-700 font-medium" %>
+    <%= form.text_field :description, class: "form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <%= form.label :quantity, class: "text-gray-700 font-medium" %>
+    <%= form.number_field :quantity, class: "form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <%= form.label :price, class: "text-gray-700 font-medium" %>
+    <%= form.text_field :price, class: "form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <%= form.label :ingredients, class: "text-gray-700 font-medium" %>
+    <%= form.text_field :ingredients, class: "form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <%= form.label :images, class: "text-gray-700 font-medium" %>
+    <%= form.file_field :images, multiple: true, class: "form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
+  </div>
+
+  <% if @product.images.attached? %>
+    <div class="mt-4 grid grid-cols-2 gap-4">
+      <% @product.images.each do |image| %>
+        <div class="relative">
+          <%= image_tag image, class: "w-full h-32 object-cover rounded-lg shadow-sm" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mt-4">
+    <%= form.submit "Save Product", class: "bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+  </div>
+<% end %>

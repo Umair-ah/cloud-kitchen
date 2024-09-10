@@ -1,0 +1,44 @@
+<h1 class="text-4xl font-bold mb-8"><%= @category.title %></h1>
+
+<div class="mb-8">
+  <% if @category.image.present? %>
+    <%= image_tag(@category.image, class: "w-full h-64 object-cover rounded-lg shadow-md") %>
+  <% else %>
+    <p class="text-gray-500">No category image available</p>
+  <% end %>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  <% @category.products.each do |product| %>
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold mb-4"><%= product.title %></h2>
+
+      <div class="mb-4">
+        <% if product.images.any? %>
+          <div class="flex space-x-2">
+            <% product.images.each do |img| %>
+              <%= image_tag(img, class: "w-24 h-24 object-cover rounded-md shadow-sm") %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-500">No product images available</p>
+        <% end %>
+      </div>
+
+      <p class="text-gray-700 mb-2"><strong>Description:</strong> <%= product.description %></p>
+      <p class="text-gray-700 mb-2"><strong>Quantity:</strong> <%= product.quantity %></p>
+      <p class="text-gray-700 mb-2"><strong>Price:</strong> $<%= product.price %></p>
+      <p class="text-gray-700 mb-4"><strong>Ingredients:</strong> <%= product.ingredients %></p>
+
+      <%= link_to "View Product", category_product_path(@category.title, product.title), class: "inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-8 flex space-x-4">
+  <%= link_to "Edit this category", edit_category_path(@category.title), class: "inline-block bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition" %>
+  
+  <%= link_to "Back to categories", categories_path, class: "inline-block bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition" %>
+
+  <%= button_to "Destroy this category", @category, method: :delete, class: "inline-block bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition" %>
+</div>

@@ -1,0 +1,49 @@
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold mb-6"><%= @product.title %></h1>
+
+  <p class="text-lg mb-4">
+    <strong>Description:</strong>
+    <%= @product.description %>
+  </p>
+
+  <p class="text-lg mb-4">
+    <strong>Quantity:</strong>
+    <%= @product.quantity %>
+  </p>
+
+  <p class="text-lg mb-4">
+    <strong>Price:</strong> $<%= @product.price %>
+  </p>
+
+  <p class="text-lg mb-4">
+    <strong>Ingredients:</strong>
+    <%= @product.ingredients %>
+  </p>
+
+  <% if @product.images.any? %>
+    <div class="relative w-full overflow-hidden mb-6">
+      <div class="flex transition-transform duration-500 ease-out transform">
+        <% @product.images.each_with_index do |img, index| %>
+          <div class="w-full flex-none">
+            <%= image_tag(img, class: "w-full h-64 object-cover rounded-lg shadow-md") %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="absolute top-1/2 left-0 transform -translate-y-1/2">
+        <button class="bg-gray-600 text-white p-2 rounded-full">‹</button>
+      </div>
+      <div class="absolute top-1/2 right-0 transform -translate-y-1/2">
+        <button class="bg-gray-600 text-white p-2 rounded-full">›</button>
+      </div>
+    </div>
+  <% else %>
+    <p class="text-gray-500">No images available</p>
+  <% end %>
+</div>
+
+<div class="flex justify-between mt-8">
+  <%= link_to "Edit this product", edit_category_product_path(@category.title, @product.title), class: "bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition" %>
+  
+  <%= link_to "Back", category_products_path(@category), class: "bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition" %>
+</div>
