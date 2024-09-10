@@ -11,5 +11,7 @@ Rails.application.routes.draw do
 
   post "auth/google_login", to: "auths#google_login"
 
+  get "cart/:cart_id", to: "carts#show", as: :cart
+
   
 end
