@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :teachers
   get "auth/signup", to: "auths#signup_page"
   get "auth/login", to: "auths#login_page"
 
