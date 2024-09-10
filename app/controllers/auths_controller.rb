@@ -16,12 +16,13 @@ class AuthsController < ApplicationController
     auth = app.auth
 
     decoded_token = auth.verify_id_token(id_token)
-    puts decoded_token
+    #puts decoded_token
 
     if decoded_token["user_id"]
-      # user = User.find_or_create_by(email: decoded_token['email']) do |user|
-      #   user.name = decoded_token['name']
-      # end
+      user = User.find_or_create_by(email: decoded_token['email']) do |user|
+        user.uid = decoded_token['user_id']
+        user.email = decoded_token['email']
+      end
       session[:user_id] = decoded_token["user_id"]
       render json: { success: true, redirect_url: root_path }
       #redirect_to root_path, notice: "Signed In with Google Successfully"
@@ -38,8 +39,11 @@ class AuthsController < ApplicationController
     response = Net::HTTP.post_form(uri, "email": @email, "password": @password)
     data = JSON.parse(response.body)
 
+    #puts data
+
     if(response.is_a?(Net::HTTPSuccess))
       session[:user_id] = data["localId"]
+      user = User.create!(uid: data["localId"], email: params[:email])
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Signed Up Successfully"  } 
         format.json { render json: data, status: :unprocessable_entity } 
@@ -63,6 +67,8 @@ class AuthsController < ApplicationController
     uri = URI("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=#{Rails.application.credentials.firebase_api_key}")
     response = Net::HTTP.post_form(uri, "email": @email, "password": @password)
     data = JSON.parse(response.body)
+
+    #puts data
 
 
     if(response.is_a?(Net::HTTPSuccess))
