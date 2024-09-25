@@ -1,0 +1,46 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-8">Your Cart</h1>
+
+  <% if @current_cart.line_items.any? %>
+    <div class="space-y-6">
+      <% @current_cart.line_items.each do |line_item| %>
+        <div class="flex items-center justify-between bg-white shadow-lg rounded-lg p-6">
+          <!-- Product Image -->
+          <div class="flex items-center space-x-4">
+            <div class="w-24 h-24">
+              <% if line_item.product.images.any? %>
+                <%= image_tag(line_item.product.images[0], class: "w-full h-full object-cover rounded-md shadow-sm") %>
+              <% else %>
+                <div class="w-full h-full bg-gray-200 rounded-md"></div>
+              <% end %>
+            </div>
+            <!-- Product Info -->
+            <div>
+              <h2 class="text-xl font-semibold"><%= line_item.product.title %></h2>
+              <p class="text-gray-500 text-sm mb-1"><%= line_item.product.description.truncate(50) %></p>
+              <p class="text-lg font-bold">$<%= line_item.product.price %></p>
+            </div>
+          </div>
+
+          <!-- Quantity Controls -->
+          <div class="flex items-center space-x-2">
+            <%= button_to '-', update_quantity_path(line_item_id: line_item.id, subtract: "subtract"), method: :patch, class: "px-2 py-1 bg-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-400" %>
+            <span class="text-xl font-semibold"><%= line_item.quantity %></span>
+            <%= button_to '+', update_quantity_path(line_item_id: line_item.id, addition: "addition"), method: :patch, class: "px-2 py-1 bg-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-400" %>
+          </div>
+
+          <!-- Remove Item -->
+          <%= button_to '×', remove_from_cart_path(line_item_id: line_item.id), method: :delete, class: "text-red-500 text-xl font-bold hover:text-red-700" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="mt-8 flex justify-end">
+      <%= link_to 'Checkout', "#", class: "bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition" %>
+    </div>
+  
+  <% else %>
+    <p class="text-gray-500 text-center text-xl">Your cart is currently empty.</p>
+  <% end %>
+</div>

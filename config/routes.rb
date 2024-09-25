@@ -16,5 +16,13 @@ Rails.application.routes.draw do
 
   get "cart/:cart_id", to: "carts#show", as: :cart
 
+
+  # line_items (add to cart, add quantity, subtract quantity, remove from cart)
+  post "/add_to_cart", to: "line_items#add_to_cart", as: :add_to_cart
+  patch "/update_quantity", to: "line_items#update_quantity", as: :update_quantity
+  delete "/remove_from_cart", to: "line_items#remove_from_cart", as: :remove_from_cart
+
+
+
   
 end
