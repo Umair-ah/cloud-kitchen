@@ -5,3 +5,20 @@
 
   <%= button_to "Log Out", auth_logout_path %> 
 <% end %>
+<div id="categories" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <% @categories.each do |category| %>
+    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+      <h2 class="text-xl font-semibold mb-4"><%= category.title %></h2>
+      <div class="mb-4">
+        <% if category.image.present? %>
+          <%= image_tag(category.image, class: "w-full h-48 object-cover rounded-lg") %>
+        <% else %>
+          <p class="text-gray-500">No image available</p>
+        <% end %>
+      </div>
+      <p>
+        <%= link_to "Show this category", category_path(category.title), class: "inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition" %>
+      </p>
+    </div>
+  <% end %>
+</div>
