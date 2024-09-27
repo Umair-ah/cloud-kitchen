@@ -9,10 +9,11 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+    <link href="https://cdn.jsdelivr.net/npm/material-icons@1.13.12/iconfont/material-icons.min.css" rel="stylesheet">
 
   </head>
 
-  <body>
+  <body class="h-full bg-gray-100">
     <%= notice %>
     <%= alert %>
 
@@ -20,4 +21,10 @@
 
     <%= yield %>
   </body>
+
+  <footer class="bg-white border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-gray-500">
+          &copy; 2024 Cloud Kitchen. All rights reserved.
+      </div>
+  </footer>
 </html>

@@ -1,45 +1,46 @@
-<h1 class="text-4xl font-bold mb-8"><%= @category.title %></h1>
-
-<div class="mb-8">
-  <% if @category.image.present? %>
-    <%= image_tag(@category.image, class: "w-full h-64 object-cover rounded-lg shadow-md") %>
-  <% else %>
-    <p class="text-gray-500">No category image available</p>
-  <% end %>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-  <% @category.products.each do |product| %>
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-      <h2 class="text-2xl font-semibold mb-4"><%= product.title %></h2>
-
-      <div class="mb-4">
-        <% if product.images.any? %>
-          <div class="flex space-x-2">
-            <% product.images.each do |img| %>
-              <%= image_tag(img, class: "w-24 h-24 object-cover rounded-md shadow-sm") %>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-gray-500">No product images available</p>
-        <% end %>
-      </div>
-
-      <p class="text-gray-700 mb-2"><strong>Description:</strong> <%= product.description %></p>
-      <p class="text-gray-700 mb-2"><strong>Quantity:</strong> <%= product.quantity %></p>
-      <p class="text-gray-700 mb-2"><strong>Price:</strong> $<%= product.price %></p>
-      <p class="text-gray-700 mb-4"><strong>Ingredients:</strong> <%= product.ingredients %></p>
-
-      <%= link_to "View Product", category_product_path(@category.title, product.title), class: "inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition" %>
-      <%= link_to "Add To Cart", add_to_cart_path(product_title: product.title), data:{turbo_method: :post} , class: "inline-block bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition" %>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Collection Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Snack Collection</h1>
+        <button class="text-gray-600 hover:text-gray-900 transition duration-200">
+            &larr; Back
+        </button>
     </div>
-  <% end %>
-</div>
 
-<div class="mt-8 flex space-x-4">
-  <%= link_to "Edit this category", edit_category_path(@category.title), class: "inline-block bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition" %>
-  
-  <%= link_to "Back to categories", categories_path, class: "inline-block bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition" %>
-
-  <%= button_to "Destroy this category", @category, method: :delete, class: "inline-block bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition" %>
+    <!-- Regular Snacks Section -->
+    <div>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">More Snacks</h2>
+        <!-- Snack Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <% @category.products.each do |product| %>
+                    <!-- Snack Card -->
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden transition duration-300 hover:shadow-2xl">
+                        <!-- Product Image -->
+                        <div class="h-40 md:h-48 lg:h-56 bg-cover bg-center"
+                            style="background-image: url('<%= product.images.attached? ? url_for(product.images.first) : 'https://via.placeholder.com/500' %>');">
+                        </div>
+                        <!-- Product Info -->
+                        <div class="flex flex-col justify-between p-4 border-t-2 border-purple-500">
+                            <!-- Title and Price -->
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition">
+                                    <%= product.title %>
+                                </h3>
+                                <p class="text-lg font-semibold text-gray-800">
+                                    ₹<%= product.price %>
+                                </p>
+                            </div>
+                            <div class="mt-4">
+                                <%= link_to "View Details", category_product_path(@category.title, product.title), class: "inline-block bg-white hover:bg-purple-100 text-purple-600 border border-purple-600 font-bold py-2 px-4 rounded-lg transition"%>
+                            </div>
+                            <div class="mt-2">
+                                <%= link_to "Add To Cart", add_to_cart_path(product_title: product.title), 
+                                    data: { turbo_method: :post }, 
+                                    class: "inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition" %>
+                            </div>
+                        </div>
+                    </div>
+            <% end %>
+        </div>
+    </div>
 </div>

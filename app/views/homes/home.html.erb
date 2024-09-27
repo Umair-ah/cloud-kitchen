@@ -1,24 +1,36 @@
+<style>
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+  .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+</style>
+<main class="flex-grow overflow-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Search Categories -->
+      <div class="mb-3">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Categories</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <% @categories.each do |category| %>
+              <%= link_to category_path(category.title) do %>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center hover:bg-purple-50">
+                  <% if category.image.present? %>
+                    <%= image_tag(category.image, class: "w-16 h-16 object-cover rounded-full mb-2") %>
+                  <% else %>
+                    <img src="https://via.placeholder.com/100" alt="Snacks" class="w-16 h-16 object-cover rounded-full mb-2">
+                  <% end %>
+                    <span class="text-sm font-medium text-gray-900"><%= category.title %></span>
+                </div>
+              <% end %>
+            <% end %>
 
-<% if session[:user_id] %>
-  <p> Data: <%= session[:data] %>
-  ID: <%= session[:user_id] %></p>
-
-  <%= button_to "Log Out", auth_logout_path %> 
-<% end %>
-<div id="categories" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-  <% @categories.each do |category| %>
-    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-      <h2 class="text-xl font-semibold mb-4"><%= category.title %></h2>
-      <div class="mb-4">
-        <% if category.image.present? %>
-          <%= image_tag(category.image, class: "w-full h-48 object-cover rounded-lg") %>
-        <% else %>
-          <p class="text-gray-500">No image available</p>
-        <% end %>
+          </div>
       </div>
-      <p>
-        <%= link_to "Show this category", category_path(category.title), class: "inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition" %>
-      </p>
-    </div>
-  <% end %>
-</div>
+      <div class="flex items-center justify-end">
+        <span><%= link_to "Show All", categories_path, class:"text-gray-900 font-medium hover:text-purple-700" %></span>
+        <div></div>
+      </div>
+  </div>
+</main>

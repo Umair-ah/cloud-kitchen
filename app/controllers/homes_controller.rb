@@ -1,7 +1,7 @@
 class HomesController < ApplicationController
 
   def home
-    @categories = Category.all
+    @categories = Category.take(4)
     respond_to do |format|
       format.html
       format.json do
