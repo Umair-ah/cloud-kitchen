@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Collection Header -->
     <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-800">Snack Collection</h1>
+        <h1 class="text-3xl font-bold text-gray-800"><%= params[:title] %></h1>
         <button class="text-gray-600 hover:text-gray-900 transition duration-200">
             &larr; Back
         </button>
@@ -9,7 +9,7 @@
 
     <!-- Regular Snacks Section -->
     <div>
-        <h2 class="text-2xl font-semibold text-gray-700 mb-4">More Snacks</h2>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Products</h2>
         <!-- Snack Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <% @category.products.each do |product| %>
