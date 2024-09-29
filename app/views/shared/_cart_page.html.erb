@@ -1,0 +1,114 @@
+<div id="cart_page_<%= @current_cart.id %>">
+<% if @current_cart.line_items.any? %>
+
+  <main class="flex-grow overflow-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Your Cart</h2>
+
+        <!-- Cart Items -->
+        <div class="space-y-6 mb-8">
+          <% @current_cart.line_items.order(:created_at).each do |line_item| %>
+
+            <!-- Cart Item 1 -->
+            <div class="bg-white shadow-md rounded-lg p-6 flex items-center space-x-4">
+              <% if line_item.product.images.any? %>
+                <%= image_tag(line_item.product.images[0], class: "w-24 h-24 object-cover rounded-md") %>
+              <% else %>
+                <img src="https://via.placeholder.com/100" alt="Snack 2" class="w-24 h-24 object-cover rounded-md">
+              <% end %>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-semibold text-gray-900"><%= line_item.product.title %></h3>
+                    <p class="text-sm text-gray-600"><%= line_item.product.description.truncate(50) %></p>
+                    <p class="text-lg font-bold text-purple-600 mt-2">₹<%= line_item.product.price %></p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <%= button_to '-', update_quantity_path(line_item_id: line_item.id, subtract: "subtract"), method: :patch, class: "bg-gray-200 text-gray-600 rounded-full w-8 h-8 flex items-center justify-center" %>
+            <span class="text-xl font-semibold"><%= line_item.quantity %></span>
+            <%= button_to '+', update_quantity_path(line_item_id: line_item.id, addition: "addition"), method: :patch, class: "bg-gray-200 text-gray-600 rounded-full w-8 h-8 flex items-center justify-center" %>
+
+
+                </div>
+              
+            <%= button_to remove_from_cart_path(line_item_id: line_item.id), method: :delete, class: "text-red-400 hover:text-red-600" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+
+
+            <% end %>
+          
+
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Order Summary</h3>
+            <div class="space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Subtotal</span>
+                    <span class="font-semibold">₹<%= @current_cart.subtotal %></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Shipping</span>
+                    <span class="font-semibold">₹0</span>
+                </div>
+                <div class="border-t pt-2 mt-2">
+                    <div class="flex justify-between">
+                        <span class="text-lg font-bold">Total</span>
+                        <span class="text-lg font-bold">₹<%= @current_cart.subtotal %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inspired by your cart 
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Inspired by your cart</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+                    <img src="https://via.placeholder.com/150" alt="Inspired Snack 1" class="w-32 h-32 object-cover rounded-full mb-4">
+                    <h3 class="text-lg font-semibold text-center">Caramel Popcorn</h3>
+                    <p class="text-sm text-gray-600 text-center mt-2">Sweet and crunchy</p>
+                    <p class="text-lg font-bold text-purple-600 mt-2">₹3.99</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+                    <img src="https://via.placeholder.com/150" alt="Inspired Snack 2" class="w-32 h-32 object-cover rounded-full mb-4">
+                    <h3 class="text-lg font-semibold text-center">Spicy Nuts Mix</h3>
+                    <p class="text-sm text-gray-600 text-center mt-2">Zesty and savory</p>
+                    <p class="text-lg font-bold text-purple-600 mt-2">₹4.49</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+                    <img src="https://via.placeholder.com/150" alt="Inspired Snack 3" class="w-32 h-32 object-cover rounded-full mb-4">
+                    <h3 class="text-lg font-semibold text-center">Berry Yogurt Bites</h3>
+                    <p class="text-sm text-gray-600 text-center mt-2">Creamy and fruity</p>
+                    <p class="text-lg font-bold text-purple-600 mt-2">₹5.29</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+                    <img src="https://via.placeholder.com/150" alt="Inspired Snack 4" class="w-32 h-32 object-cover rounded-full mb-4">
+                    <h3 class="text-lg font-semibold text-center">Cheese Crackers</h3>
+                    <p class="text-sm text-gray-600 text-center mt-2">Savory and crisp</p>
+                    <p class="text-lg font-bold text-purple-600 mt-2">₹3.79</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+                    <img src="https://via.placeholder.com/150" alt="Inspired Snack 5" class="w-32 h-32 object-cover rounded-full mb-4">
+                    <h3 class="text-lg font-semibold text-center">Coconut Chips</h3>
+                    <p class="text-sm text-gray-600 text-center mt-2">Tropical crunch</p>
+                    <p class="text-lg font-bold text-purple-600 mt-2">₹4.19</p>
+                </div>
+            </div>
+        </div>-->
+    </div>
+  </main>
+  <% end %>
+
+  <footer class="bg-white border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <p class="text-gray-600">Subtotal: ₹<%= @current_cart.subtotal %></p>
+          <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+              Checkout
+          </button>
+      </div>
+  </footer>
+</div>

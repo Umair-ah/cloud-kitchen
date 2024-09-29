@@ -1,0 +1,12 @@
+<div class="flex items-center mb-4 sm:mb-0">
+
+  <%= button_to '-', update_quantity_path(line_item_id: line_item.id, subtract: "subtract"), method: :patch, class: "bg-gray-200 text-gray-700 rounded-full w-8 h-8 flex items-center justify-center" %>
+
+  <span class="mx-4 text-xl font-semibold" id="line_item<%= line_item.id %>"></span>
+
+  <%= button_to '+', update_quantity_path(line_item_id: line_item.id, addition: "addition"), method: :patch, class: "bg-gray-200 text-gray-700 rounded-full w-8 h-8 flex items-center justify-center" %>
+
+
+
+
+</div>
