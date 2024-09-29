@@ -11,6 +11,9 @@ class HomesController < ApplicationController
         )
       end 
     end
+
+    @products = Product.order(updated_at: :desc).limit(4)
+
   end
   
 end
