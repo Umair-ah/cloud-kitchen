@@ -17,6 +17,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/:title or /categories/:title.json
   def show
+    @products_pagy, @products = pagy(@category.products)
     respond_to do |format|
       format.html # Renders the HTML template for show
       format.json do

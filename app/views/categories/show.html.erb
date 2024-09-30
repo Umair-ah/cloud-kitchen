@@ -12,7 +12,7 @@
         <h2 class="text-2xl font-semibold text-gray-700 mb-4">Products</h2>
         <!-- Snack Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <% @category.products.each do |product| %>
+            <% @products.each do |product| %>
                     <!-- Snack Card -->
                     <div class="bg-white shadow-lg rounded-lg overflow-hidden transition duration-300 hover:shadow-2xl">
                         <!-- Product Image -->
@@ -40,5 +40,72 @@
                     </div>
             <% end %>
         </div>
+      <style>
+
+          .pagy {
+            display: flex;
+          }
+
+          .pagy > :not([hidden]) ~ :not([hidden]) {
+            --space-reverse: 0;
+            margin-right: calc(0.25rem * var(--space-reverse));
+            margin-left: calc(0.25rem * calc(1 - var(--space-reverse)));
+          }
+
+          .pagy {
+            font-family: sans-serif;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 600;
+            color: rgb(107 114 128);
+          }
+
+          .pagy .page.gap {
+            /* if you need to customize it */
+          }
+
+          .pagy .page a {
+            display: block;
+            text-decoration: none;
+            border-radius: 0.2rem;
+            background-color: rgb(255 255 255);
+            padding: 0.25rem 0.75rem;
+            color: inherit;
+          }
+
+          .pagy .page a:hover {
+            background-color: rgb(209 213 219);
+          }
+
+          .pagy .page.active a {
+            cursor: default;
+            background-color: rgb(168 85 247);
+            color: rgb(255 255 255);
+          }
+
+          .pagy .page.disabled a {
+            cursor: default;
+            background-color: rgb(243 244 246);
+            color: rgb(209 213 219);
+          }
+
+          .pagy .pagy-combo-input, .pagy.pagy-items-selector-js {
+            white-space: nowrap;
+            display: inline-block;
+            border-radius: 0.5rem;
+            background-color: rgb(229 231 235);
+            padding: 0.125rem 0.75rem;
+          }
+
+          .pagy .pagy-combo-input input, .pagy.pagy-items-selector-js input {
+            line-height: 1.5rem;
+            border-radius: 0.375rem;
+            border-style: none;
+            background-color: rgb(243 244 246);
+          }
+      </style>
+      <div class="my-6 grid place-items-center">
+        <%== pagy_nav(@products_pagy) if @products_pagy.pages > 1 %>
+      </div>
     </div>
 </div>

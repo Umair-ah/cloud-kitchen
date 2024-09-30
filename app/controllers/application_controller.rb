@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Pagy::Backend
 
   before_action :init_cart
   helper_method :current_user
