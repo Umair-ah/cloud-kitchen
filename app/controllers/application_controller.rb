@@ -25,6 +25,7 @@ class ApplicationController < ActionController::Base
     cookies.signed[:cart_id] = { value: cart.id, expires: 1.week.from_now }
   
     @current_cart = cart
+    response.headers['Cart-ID'] = @current_cart.id.to_s
   end
 
 
