@@ -13,6 +13,13 @@ class Product < ApplicationRecord
   end
 
   def images_url
-    images.attached? ? images.map { |img| Rails.application.routes.url_helpers.rails_blob_url(img, only_path: true) } : []
+    if images.attached?
+      images.map do |img|
+        Rails.application.routes.url_helpers.rails_blob_url(img, host: "62d1-103-188-18-21.ngrok-free.app", protocol: 'https')
+      end
+    else
+      []
+    end
   end
+  
 end

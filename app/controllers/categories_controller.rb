@@ -18,6 +18,7 @@ class CategoriesController < ApplicationController
   # GET /categories/:title or /categories/:title.json
   def show
     @products_pagy, @products = pagy(@category.products)
+  
     respond_to do |format|
       format.html # Renders the HTML template for show
       format.json do
@@ -26,11 +27,17 @@ class CategoriesController < ApplicationController
             id: @category.id,
             title: @category.title,
             image_url: url_for(@category.image),
-            products: @category.products.as_json(
+            products: @products.as_json(
               except: [:created_at, :updated_at],
               methods: [:images_url]
-            ),
-           
+            )
+          },
+          pagination: {
+            current_page: @products_pagy.page,
+            next_page: @products_pagy.next,
+            prev_page: @products_pagy.prev,
+            total_pages: @products_pagy.pages,
+            total_items: @products_pagy.count
           }
         }
       end
