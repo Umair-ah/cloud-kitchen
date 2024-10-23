@@ -1,0 +1,43 @@
+<div class="flex flex-col min-h-screen bg-gray-50">
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <h1 class="text-2xl font-bold text-gray-900">Order Success</h1>
+    </div>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center">
+    <div class="bg-white shadow-md rounded-lg p-8 max-w-lg mx-auto">
+      <div class="text-center mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <h2 class="text-3xl font-bold text-gray-900">Thank You!</h2>
+        <p class="mt-2 text-gray-600">Your order has been placed successfully.</p>
+      </div>
+
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold text-gray-900">Order Summary</h3>
+        <div class="space-y-2 mt-2">
+          <div class="flex justify-between">
+            <span class="text-gray-600">Order Number:</span>
+            <span class="font-semibold">#<%= @order.id %></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Total Amount:</span>
+            <span class="font-semibold">₹<%= @order.total_amount %></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Shipping Address:</span>
+            <span class="font-semibold"><%= @order.shipping_address %></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <%= link_to "Continue Shopping", root_path, class: "mt-4 inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" %>
+      </div>
+    </div>
+  </main>
+
+
+</div>

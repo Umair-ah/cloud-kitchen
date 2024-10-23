@@ -76,3 +76,4 @@ end
 gem 'firebase-admin-sdk'
 gem 'rack-cors'
 gem "pagy", "~> 7.0"
+gem "razorpay"

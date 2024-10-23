@@ -113,7 +113,7 @@
           </button> 
 <%
 =end%>
-          <%= link_to "Checkout", checkout_path(@current_cart), class:"bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" %>
+          <%= link_to "Checkout", checkout_path(@current_cart), data:{turbo: false}, class:"bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" %>
       </div>
   </footer>
 </div>

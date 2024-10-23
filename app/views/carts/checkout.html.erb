@@ -24,30 +24,85 @@
     <h3 class="text-xl font-bold text-gray-900 mb-4">Shipping Address</h3>
     <form id="checkout-form" action="/sd" method="POST">
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+      <% if !current_user %>
+        <div class="flex justify-evenly">
+          <div>
+            <label for="Name" class="block text-gray-700">Full Name</label>
+            <input type="text" id="Name" name="order[full_name]" 
+              class="w-full px-4 py-2 border rounded-md mt-2" required>
+             <div id="name-error" class="text-red-600 mt-2 hidden">Name is required.</div>
+
+          </div>
+
+          <div>
+            <label for="Phone" class="block text-gray-700">Phone Number</label>
+            <input type="text" id="Phone" name="order[phone_number]" 
+              class="w-full px-4 py-2 border rounded-md mt-2" required>
+             <div id="phone-error" class="text-red-600 mt-2 hidden">Phone number must be 10 digits.</div>
+
+          </div>
+        </div>
+      <% end %>
       
       <label for="shipping_address" class="block text-gray-700">Enter your address</label>
       <input type="text" id="shipping_address" name="order[shipping_address]" 
         class="w-full px-4 py-2 border rounded-md mt-2" required>
       
-      <div id="address-error" class="text-red-600 mt-2 hidden">Address must be at least 10 characters long.</div>
+
       
-      <button type="submit" id="checkout-button" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-4">
-        Confirm and Pay
-      </button>
+     
+      <div id="address-error" class="text-red-600 mt-2 hidden">Address must be at least 10 characters long.</div>
     </form>
+      <button id="rzp-button1" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-4">Pay with Razorpay</button>
+
   </div>
 </div>
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
   document.addEventListener('turbo:load', function() {
     const addressInput = document.getElementById('shipping_address');
     const addressError = document.getElementById('address-error');
     const checkoutForm = document.getElementById('checkout-form');
+
+    const nameInput = document.getElementById('Name');
+    const phoneInput = document.getElementById('Phone');
     
+    const nameError = document.getElementById('name-error') || document.createElement('div');
+    nameError.id = 'name-error';
+    nameError.className = 'text-red-600 mt-2 hidden';
+    nameError.innerText = 'Name is required.';
+    checkoutForm.appendChild(nameError);
+
+    const phoneError = document.getElementById('phone-error') || document.createElement('div');
+    phoneError.id = 'phone-error';
+    phoneError.className = 'text-red-600 mt-2 hidden';
+    phoneError.innerText = 'Phone number must be 10 digits.';
+    checkoutForm.appendChild(phoneError);
+
+    const savedName = localStorage.getItem('full_name');
+    if (savedName) {
+      nameInput.value = savedName;
+    }
+
+    const savedPhone = localStorage.getItem('phone_number');
+    if (savedPhone) {
+      phoneInput.value = savedPhone;
+    }
+
     const savedAddress = localStorage.getItem('shipping_address');
     if (savedAddress) {
       addressInput.value = savedAddress;
     }
+
+    nameInput.addEventListener('input', function() {
+      localStorage.setItem('full_name', nameInput.value);
+    });
+
+    phoneInput.addEventListener('input', function() {
+      localStorage.setItem('phone_number', phoneInput.value);
+    });
 
     addressInput.addEventListener('input', function() {
       localStorage.setItem('shipping_address', addressInput.value);
@@ -56,12 +111,116 @@
     checkoutForm.addEventListener('submit', function(event) {
       const addressValue = addressInput.value.trim();
       
-      if (addressValue.length < 10) { // Validate address length
+      if (addressValue.length < 10) {
         event.preventDefault();
         addressError.classList.remove('hidden');
       } else {
         addressError.classList.add('hidden');
       }
     });
+
+    var options = {
+      "key": "rzp_test_EHT9uzYNhiABop", 
+      "amount": "<%= @order.amount %>", 
+      "currency": "INR",
+      "name": "Acme Corp",
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": "<%= @order.id %>", 
+      "handler": function(response) {
+        var paymentData = {
+          payment_id: response.razorpay_payment_id,
+          order_id: response.razorpay_order_id,
+          signature: response.razorpay_signature,
+          shipping_address: localStorage.getItem("full_name"),
+          shipping_address: localStorage.getItem("phone_number"),
+
+          shipping_address: localStorage.getItem("shipping_address")
+
+        };
+
+        fetch("http://localhost:3000/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content,
+          },
+          body: JSON.stringify(paymentData),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.order_id){
+            window.location.href = `http://localhost:3000/success?order_id=${data.order_id}`;
+
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+      },
+      "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+
+    var rzp1 = new Razorpay(options);
+
+    rzp1.on('payment.failed', function(response) {
+      alert(response.error.code);
+      alert(response.error.description);
+      alert(response.error.source);
+      alert(response.error.step);
+      alert(response.error.reason);
+      alert(response.error.metadata.order_id);
+      alert(response.error.metadata.payment_id);
+    });
+
+    document.getElementById('rzp-button1').onclick = function(e) {
+      const addressValue = addressInput.value.trim();
+      const nameValue = nameInput.value.trim();
+      const phoneValue = phoneInput.value.trim();
+
+      let isValid = true;
+
+      // Validate address
+      if (addressValue.length < 10) {
+        e.preventDefault();
+        addressError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        addressError.classList.add('hidden');
+      }
+
+      // Validate name
+      if (nameValue.length === 0) {
+        e.preventDefault();
+        nameError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        nameError.classList.add('hidden');
+      }
+
+      // Validate phone number
+      if (!/^\d{10}$/.test(phoneValue)) {
+        e.preventDefault();
+        phoneError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        phoneError.classList.add('hidden');
+      }
+
+      // If all validations pass, open Razorpay
+      if (isValid) {
+        rzp1.open();
+      }
+    };
   });
 </script>

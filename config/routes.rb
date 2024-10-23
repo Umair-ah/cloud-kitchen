@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   get "cart/:cart_id", to: "carts#show", as: :cart
   get "cart/:cart_id/checkout", to: "carts#checkout", as: :checkout
 
+  post "/order", to: "carts#order", as: :order
+
+  get "/success", to: "carts#success", as: :success
+
 
 
   # line_items (add to cart, add quantity, subtract quantity, remove from cart)
