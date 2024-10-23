@@ -1,0 +1,67 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <h2 class="text-2xl font-bold text-gray-900 mb-6">Checkout Summary</h2>
+  
+  <!-- Order Summary -->
+  <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+    <h3 class="text-xl font-bold text-gray-900 mb-4">Order Summary</h3>
+    <div class="space-y-2">
+      <div class="flex justify-between">
+        <% @current_cart.line_items.order(:created_at).each do |line_item| %>
+          <span class="font-semibold"><%= line_item.product.title %></span>
+          <span class="font-semibold">₹<%= line_item.product.price %></span>
+        <% end %>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-600">Total</span>
+        <span class="font-semibold">₹<%= @current_cart.subtotal %></span>
+      </div>
+      <!-- Other summary details -->
+    </div>
+  </div>
+
+  <!-- Shipping Address Input -->
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <h3 class="text-xl font-bold text-gray-900 mb-4">Shipping Address</h3>
+    <form id="checkout-form" action="/sd" method="POST">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      
+      <label for="shipping_address" class="block text-gray-700">Enter your address</label>
+      <input type="text" id="shipping_address" name="order[shipping_address]" 
+        class="w-full px-4 py-2 border rounded-md mt-2" required>
+      
+      <div id="address-error" class="text-red-600 mt-2 hidden">Address must be at least 10 characters long.</div>
+      
+      <button type="submit" id="checkout-button" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-4">
+        Confirm and Pay
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    const addressInput = document.getElementById('shipping_address');
+    const addressError = document.getElementById('address-error');
+    const checkoutForm = document.getElementById('checkout-form');
+    
+    const savedAddress = localStorage.getItem('shipping_address');
+    if (savedAddress) {
+      addressInput.value = savedAddress;
+    }
+
+    addressInput.addEventListener('input', function() {
+      localStorage.setItem('shipping_address', addressInput.value);
+    });
+
+    checkoutForm.addEventListener('submit', function(event) {
+      const addressValue = addressInput.value.trim();
+      
+      if (addressValue.length < 10) { // Validate address length
+        event.preventDefault();
+        addressError.classList.remove('hidden');
+      } else {
+        addressError.classList.add('hidden');
+      }
+    });
+  });
+</script>

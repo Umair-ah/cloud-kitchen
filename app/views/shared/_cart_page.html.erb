@@ -106,9 +106,14 @@
   <footer class="bg-white border-t border-gray-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <p class="text-gray-600">Subtotal: ₹<%= @current_cart.subtotal %></p>
-          <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+          <%
+=begin%>
+ <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
               Checkout
-          </button>
+          </button> 
+<%
+=end%>
+          <%= link_to "Checkout", checkout_path(@current_cart), class:"bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" %>
       </div>
   </footer>
 </div>
