@@ -132,8 +132,8 @@
           payment_id: response.razorpay_payment_id,
           order_id: response.razorpay_order_id,
           signature: response.razorpay_signature,
-          shipping_address: localStorage.getItem("full_name"),
-          shipping_address: localStorage.getItem("phone_number"),
+          full_name: localStorage.getItem("full_name"),
+          phone_number: localStorage.getItem("phone_number"),
 
           shipping_address: localStorage.getItem("shipping_address")
 
@@ -174,13 +174,16 @@
     var rzp1 = new Razorpay(options);
 
     rzp1.on('payment.failed', function(response) {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      alert(response.error.metadata.order_id);
-      alert(response.error.metadata.payment_id);
+      //alert(response.error.code);
+      //alert(response.error.description);
+      //alert(response.error.source);
+      //alert(response.error.step);
+      //alert(response.error.reason);
+      //alert(response.error.metadata.order_id);
+      //alert(response.error.metadata.payment_id);
+
+      window.location.href = `http://localhost:3000/failure?order_id=${response.error.metadata.order_id}&payment_id=${response.error.metadata.payment_id}&reason=${response.error.reason}`
+
     });
 
     document.getElementById('rzp-button1').onclick = function(e) {

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   post "/order", to: "carts#order", as: :order
 
   get "/success", to: "carts#success", as: :success
+  get "/failure", to: "carts#failure", as: :failure
 
 
 

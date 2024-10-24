@@ -27,13 +27,20 @@ class WebhooksController < ApplicationController
     case event['event']
 
     when 'order.paid'
+      order_id = event['payload']['order']['entity']['id']
+      order = Order.find_by(razor_order_id: order_id)
+      order.payment_verified! if order
       
     when 'payment.authorized'
       # Handle payment authorized event
     when 'payment.captured'
       # Handle payment captured event
+      payment_id = event['payload']['payment']['entity']['id']
+      order = Order.find_by(razorpay_payment_id: payment_id)
+      order.payment_verified! if order
     else
       Rails.logger.info "Unhandled event: #{event['event']}"
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 end

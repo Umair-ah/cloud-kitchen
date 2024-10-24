@@ -1,6 +1,7 @@
 class LineItemsController < ApplicationController
   before_action :get_line_item_by_params_id, only: %i[remove_from_cart update_quantity]
   #skip_before_action :verify_authenticity_token, only: [:add_to_cart, :remove_from_cart]
+  rescue_from StandardError, with: :handle_standard_error
 
   def add_to_cart
     product_title = params[:product_title]
@@ -153,6 +154,11 @@ class LineItemsController < ApplicationController
   def get_line_item_by_params_id
     @line_item_id = params[:line_item_id]
     @line_item = @current_cart.line_items.find_by(id: @line_item_id)
+  end
+
+  def handle_standard_error(exception)
+    logger.error "Error in LineItemsController: #{exception.message}"
+    redirect_to root_path, alert: "an error has occured, please try again later!"
   end
 
 end
