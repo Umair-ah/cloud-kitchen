@@ -31,5 +31,11 @@ Rails.application.routes.draw do
 
 
 
+  post "/razorpay_order_id", to: "mobiles#razorpay_order_id"
+
+  get '/csrf_token', to: 'mobiles#csrf_token'
+
+
+
   
 end
