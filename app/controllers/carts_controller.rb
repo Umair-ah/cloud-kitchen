@@ -1,4 +1,9 @@
 class CartsController < ApplicationController
+
+  skip_before_action :verify_authenticity_token, only: %i[ order ]
+
+
+
   def show; end
 
   def checkout

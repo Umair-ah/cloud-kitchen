@@ -19,7 +19,7 @@
                 <div class="flex-grow">
                     <h3 class="text-lg font-semibold text-gray-900"><%= line_item.product.title %></h3>
                     <p class="text-sm text-gray-600"><%= line_item.product.description.truncate(50) %></p>
-                    <p class="text-lg font-bold text-purple-600 mt-2">₹<%= line_item.product.price %></p>
+                    <p class="text-lg font-bold text-emerald-600 mt-2">₹<%= line_item.product.price %></p>
                 </div>
                 <div class="flex items-center space-x-2">
                   <%= button_to '-', update_quantity_path(line_item_id: line_item.id, subtract: "subtract"), method: :patch, class: "bg-gray-200 text-gray-600 rounded-full w-8 h-8 flex items-center justify-center" %>
@@ -71,31 +71,31 @@
                     <img src="https://via.placeholder.com/150" alt="Inspired Snack 1" class="w-32 h-32 object-cover rounded-full mb-4">
                     <h3 class="text-lg font-semibold text-center">Caramel Popcorn</h3>
                     <p class="text-sm text-gray-600 text-center mt-2">Sweet and crunchy</p>
-                    <p class="text-lg font-bold text-purple-600 mt-2">₹3.99</p>
+                    <p class="text-lg font-bold text-emerald-600 mt-2">₹3.99</p>
                 </div>
                 <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
                     <img src="https://via.placeholder.com/150" alt="Inspired Snack 2" class="w-32 h-32 object-cover rounded-full mb-4">
                     <h3 class="text-lg font-semibold text-center">Spicy Nuts Mix</h3>
                     <p class="text-sm text-gray-600 text-center mt-2">Zesty and savory</p>
-                    <p class="text-lg font-bold text-purple-600 mt-2">₹4.49</p>
+                    <p class="text-lg font-bold text-emerald-600 mt-2">₹4.49</p>
                 </div>
                 <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
                     <img src="https://via.placeholder.com/150" alt="Inspired Snack 3" class="w-32 h-32 object-cover rounded-full mb-4">
                     <h3 class="text-lg font-semibold text-center">Berry Yogurt Bites</h3>
                     <p class="text-sm text-gray-600 text-center mt-2">Creamy and fruity</p>
-                    <p class="text-lg font-bold text-purple-600 mt-2">₹5.29</p>
+                    <p class="text-lg font-bold text-emerald-600 mt-2">₹5.29</p>
                 </div>
                 <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
                     <img src="https://via.placeholder.com/150" alt="Inspired Snack 4" class="w-32 h-32 object-cover rounded-full mb-4">
                     <h3 class="text-lg font-semibold text-center">Cheese Crackers</h3>
                     <p class="text-sm text-gray-600 text-center mt-2">Savory and crisp</p>
-                    <p class="text-lg font-bold text-purple-600 mt-2">₹3.79</p>
+                    <p class="text-lg font-bold text-emerald-600 mt-2">₹3.79</p>
                 </div>
                 <div class="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
                     <img src="https://via.placeholder.com/150" alt="Inspired Snack 5" class="w-32 h-32 object-cover rounded-full mb-4">
                     <h3 class="text-lg font-semibold text-center">Coconut Chips</h3>
                     <p class="text-sm text-gray-600 text-center mt-2">Tropical crunch</p>
-                    <p class="text-lg font-bold text-purple-600 mt-2">₹4.19</p>
+                    <p class="text-lg font-bold text-emerald-600 mt-2">₹4.19</p>
                 </div>
             </div>
         </div>-->
@@ -108,12 +108,12 @@
           <p class="text-gray-600">Subtotal: ₹<%= @current_cart.subtotal %></p>
           <%
 =begin%>
- <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+ <button class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
               Checkout
           </button> 
 <%
 =end%>
-          <%= link_to "Checkout", checkout_path(@current_cart), data:{turbo: false}, class:"bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" %>
+          <%= link_to "Checkout", checkout_path(@current_cart), data:{turbo: false}, class:"bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded" %>
       </div>
   </footer>
 </div>

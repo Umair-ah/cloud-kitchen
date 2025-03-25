@@ -15,7 +15,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             <% @categories.each do |category| %>
               <%= link_to category_path(category.title) do %>
-                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center hover:bg-purple-50">
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center hover:bg-emerald-50">
                   <% if category.image.present? %>
                     <%= image_tag(category.image, class: "w-16 h-16 object-cover rounded-full mb-2") %>
                   <% else %>
@@ -29,7 +29,7 @@
           </div>
       </div>
       <div class="flex items-center justify-end">
-        <span><%= link_to "Show All", categories_path, class:"text-gray-900 font-medium hover:text-purple-700" %></span>
+        <span><%= link_to "Show All", categories_path, class:"text-gray-900 font-medium hover:text-emerald-700" %></span>
         <div></div>
       </div>
     <div>
@@ -44,10 +44,10 @@
                           style="background-image: url('<%= product.images.attached? ? url_for(product.images.first) : 'https://via.placeholder.com/500' %>');">
                       </div>
                       <!-- Product Info -->
-                      <div class="flex flex-col justify-between p-4 border-t-2 border-purple-500">
+                      <div class="flex flex-col justify-between p-4 border-t-2 border-emerald-500">
                           <!-- Title and Price -->
                           <div class="flex items-center justify-between">
-                              <h3 class="text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition">
+                              <h3 class="text-lg font-semibold text-gray-800 group-hover:text-emerald-600 transition">
                                   <%= product.title %>
                               </h3>
                               <p class="text-lg font-semibold text-gray-800">
@@ -55,7 +55,7 @@
                               </p>
                           </div>
                           <div class="mt-4">
-                              <%= link_to "View Details", category_product_path(product.category.title, product.title), class: "inline-block bg-white hover:bg-purple-100 text-purple-600 border border-purple-600 font-bold py-2 px-4 rounded-lg transition"%>
+                              <%= link_to "View Details", category_product_path(product.category.title, product.title), class: "inline-block bg-white hover:bg-emerald-100 text-emerald-600 border border-emerald-600 font-bold py-2 px-4 rounded-lg transition"%>
                           </div>
                           <div class="mt-2" id="products_<%= product.id %>">
                               <%= render "shared/add_to_cart_products_index", product: product %>

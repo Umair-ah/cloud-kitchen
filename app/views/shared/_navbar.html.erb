@@ -1,7 +1,7 @@
 <div class="flex flex-col">
   <header class="bg-white shadow-md">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 class="text-2xl font-bold text-purple-600">Cloud Kitchen</h1>
+          <h1 class="text-2xl font-bold text-emerald-600">Farm Hub</h1>
           <nav>
             <div class="flex items-center gap-3">
               <div class="relative py-2 hover:cursor-pointer mr-5">
@@ -16,8 +16,8 @@
               </div>
               
               <% unless current_user %>
-                <%= link_to "Sign Up", auth_signup_path, class:"text-white bg-purple-500 hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-500 dark:focus:ring-purple-800 rounded-md" %>
-                <%= link_to "Log In", auth_login_path, class:"text-purple-500 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium text-sm px-4 py-2 text-center dark:bg-gray-600 dark:hover:bg-gray-300 dark:focus:ring-purple-800 rounded-md" %>
+                <%= link_to "Sign Up", auth_signup_path, class:"text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium text-sm px-4 py-2 text-center dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus:ring-purple-800 rounded-md" %>
+                <%= link_to "Log In", auth_login_path, class:"text-emerald-500 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium text-sm px-4 py-2 text-center dark:bg-gray-600 dark:hover:bg-gray-300 dark:focus:ring-purple-800 rounded-md" %>
               <% else %>
                 <%= link_to "Sign Out", auth_logout_path, data: { turbo_method: :post }, class:"block mt-3 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
           
@@ -30,10 +30,10 @@
 </div>
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
     <div class="relative">
-      <input type="text" placeholder="Search Cloud Kitchen" class="w-full h-12 pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+      <input type="text" placeholder="Search Farm Hub" class="w-full h-12 pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
       <span class="material-icons absolute left-3 top-3 text-gray-400">search</span>
       <span class="material-icons absolute right-3 top-3 text-gray-400 cursor-pointer">arrow_back</span>
       <!-- Uncomment the line below and comment out the line above to show loading state -->
-      <!-- <span class="material-icons absolute right-3 top-3 text-purple-600 animate-spin">refresh</span> -->
+      <!-- <span class="material-icons absolute right-3 top-3 text-emerald-600 animate-spin">refresh</span> -->
     </div>
   </div>

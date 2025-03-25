@@ -15,7 +15,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             <% @categories.each do |category| %>
               <%= link_to category_path(category.title) do %>
-                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center hover:bg-purple-50">
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center hover:bg-emerald-50">
                   <% if category.image.present? %>
                     <%= image_tag(category.image, class: "w-16 h-16 object-cover rounded-full mb-2") %>
                   <% else %>
