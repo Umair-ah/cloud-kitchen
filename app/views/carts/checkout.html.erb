@@ -139,7 +139,7 @@
 
         };
 
-        fetch("http://localhost:3000/order", {
+        fetch("http://16.171.44.88/order", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -150,7 +150,7 @@
         .then((response) => response.json())
         .then((data) => {
           if (data.order_id){
-            window.location.href = `http://localhost:3000/success?order_id=${data.order_id}`;
+            window.location.href = `http://16.171.44.88/success?order_id=${data.order_id}`;
 
           }
         })
@@ -182,7 +182,7 @@
       //alert(response.error.metadata.order_id);
       //alert(response.error.metadata.payment_id);
 
-      window.location.href = `http://localhost:3000/failure?order_id=${response.error.metadata.order_id}&payment_id=${response.error.metadata.payment_id}&reason=${response.error.reason}`
+      window.location.href = `http://16.171.44.88/failure?order_id=${response.error.metadata.order_id}&payment_id=${response.error.metadata.payment_id}&reason=${response.error.reason}`
 
     });
 
