@@ -15,7 +15,7 @@ class Product < ApplicationRecord
   def images_url
     if images.attached?
       images.map do |img|
-        Rails.application.routes.url_helpers.rails_blob_url(img, host: "62d1-103-188-18-21.ngrok-free.app", protocol: 'https')
+        Rails.application.routes.url_helpers.rails_blob_url(img, host: "cloud-kitchen-t8vs.onrender.com", protocol: 'https')
       end
     else
       []
